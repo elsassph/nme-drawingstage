@@ -5,6 +5,7 @@ import nme.display.BitmapData;
 import nme.events.Event;
 import nme.events.MouseEvent;
 import nme.geom.Point;
+import nme.geom.Rectangle;
 
 
 /**
@@ -12,6 +13,7 @@ import nme.geom.Point;
  */
 class BitmapGrid extends nme.display.Sprite
 {
+	public var rect:Rectangle;
 	var size:Int;
 	var shift:Int;
 	var cols:Int;
@@ -24,7 +26,28 @@ class BitmapGrid extends nme.display.Sprite
 	{
 		super();
 		size = cellSize;
-		init(width, height, backgroundColor);
+		rect = new Rectangle(0, 0, width, height);
+		init(backgroundColor);
+	}
+
+	public function fillRect(rect:Rectangle, color:Int)
+	{
+		var temp = rect.clone();
+		var fill = BitmapBrush.getColor(color);
+		for(i in 0...lines)
+		{
+			var line = grid[i];
+			temp.left = rect.left;
+			temp.width = rect.width;
+			for(j in 0...cols)
+			{
+				line[j].bitmapData.fillRect(temp, fill);
+				temp.left -= size;
+				temp.width = rect.width;
+			}
+			temp.top -= size;
+			temp.height = rect.height;
+		}
 	}
 
 	public function clearStyle(id:Int)
@@ -134,7 +157,7 @@ class BitmapGrid extends nme.display.Sprite
 		bmp.copyPixels(brush.bmp, brush.rect, pos, null, null, true);
 	}
 
-	function init(width:Int, height:Int, bgColor:Int)
+	function init(bgColor:Int)
 	{
 		shift = 1;
 		var tmp = size;
@@ -143,8 +166,8 @@ class BitmapGrid extends nme.display.Sprite
 		contexts = [];
 		pos = new Point();
 
-		cols = Math.ceil(width / size);
-		lines = Math.ceil(height / size);
+		cols = Math.ceil(rect.width / size);
+		lines = Math.ceil(rect.height / size);
 		grid = [];
 		for(i in 0...lines)
 		{

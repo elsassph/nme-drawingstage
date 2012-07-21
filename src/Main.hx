@@ -33,8 +33,17 @@ class Main extends Sprite
 		#end
 		// Entry point
 		
-		stage.addChild(new DrawingStage(stage.stageWidth, stage.stageHeight));
-		stage.addChild(new utils.FPS());
+		drawingStage = new DrawingStage(stage.stageWidth, stage.stageHeight);
+		stage.addChild(drawingStage);
+
+		var fps = new utils.FPS();
+		fps.addEventListener(nme.events.MouseEvent.CLICK, reset);
+		stage.addChild(fps);
+	}
+
+	function reset(e) 
+	{
+		drawingStage.clear();
 	}
 	
 	public static function main() 

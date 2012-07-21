@@ -6,6 +6,7 @@ A multi-touch-friendly fullscreen drawing canvas made with a grid of bitmaps.
     var grid = new BitmapGrid( width, height, cellSize, backgroundColor );
     var brush = new BitmapBrush( bitmapData, color );
   
+    grid.fillRect( grid.rect, color );
     grid.lineStyle( id, brush );
     grid.moveTo( id, x, y );
     grid.lineTo( id, x, y );
@@ -18,6 +19,8 @@ some threshold (it's related to L1 and L2 CPU memory cache sizes).
 - Compatible with native and Flash NME targets. 
 HTML5 target actually works... but the brush isn't colored because BitmapData.draw doesn't seem to 
 support color transforms.
+
+- Click/Tap the framerate indicator to clear the stage.
 
 License
 -------

@@ -12,6 +12,8 @@ import nme.geom.Point;
  */
 class DrawingStage extends nme.display.Sprite
 {
+	var _width:Int;
+	var _height:Int;
 	var canvas:BitmapGrid;
 	var drawing:Bool;
 	var image:BitmapData;
@@ -20,17 +22,21 @@ class DrawingStage extends nme.display.Sprite
 	public function new(width:Int, height:Int)
 	{
 		super();
-
-		scrollRect = new nme.geom.Rectangle(0, 0, width, height);
-		mouseChildren = false;
-
+		_width = width;
+		_height = height;
 		addEventListener(Event.ADDED_TO_STAGE, added);
+	}
+
+	public function clear()
+	{
+		canvas.fillRect(canvas.rect, 0xffffff);
 	}
 
 	/* MOUSE */
 
 	function mouseUp(e) 
 	{
+		stage.removeEventListener(MouseEvent.MOUSE_UP, mouseUp);
 		drawing = false;
 		releaseBrush(0);
 	}
@@ -44,6 +50,7 @@ class DrawingStage extends nme.display.Sprite
 	function mouseDown(e:MouseEvent)
 	{
 		drawing = true;
+		stage.addEventListener(MouseEvent.MOUSE_UP, mouseUp);
 		moveTo(0, e.localX, e.localY);
 	}
 
@@ -86,7 +93,8 @@ class DrawingStage extends nme.display.Sprite
 
 	function releaseBrush(id)
 	{
-		brushes.push(canvas.clearStyle(id).brush);
+		var ctx = canvas.clearStyle(id);
+		if (ctx != null) brushes.push(ctx.brush);
 	}
 
 	function getBrush()
@@ -104,9 +112,10 @@ class DrawingStage extends nme.display.Sprite
 		brushes = [];
 		image = nme.Assets.getBitmapData("img/brush-hard.png");
 
-		canvas = new BitmapGrid(cast scrollRect.width, cast scrollRect.height, 128);
+		canvas = new BitmapGrid(_width, _height, 128);
 		addChild(canvas);
 
+		mouseChildren = false;
 		#if mobile
 		nme.ui.Multitouch.inputMode = nme.ui.MultitouchInputMode.TOUCH_POINT;
 		addEventListener(nme.events.TouchEvent.TOUCH_BEGIN, touchBegin);
@@ -115,7 +124,6 @@ class DrawingStage extends nme.display.Sprite
 		#else
 		addEventListener(MouseEvent.MOUSE_DOWN, mouseDown);
 		addEventListener(MouseEvent.MOUSE_MOVE, mouseMove);
-		addEventListener(MouseEvent.MOUSE_UP, mouseUp);
 		#end
 	}
 }
