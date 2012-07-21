@@ -28,16 +28,15 @@ class FPS extends TextField
 
    public function onEnter(_)
    {
-      var now = Lib.getTimer () / 1000;
+      var now = Lib.getTimer() / 1000;
       times.push(now);
       while(times[0]<now-1)
          times.shift();
       fps = times.length;
-      
       if (visible && prev != fps)
       {
          prev = fps;
-         text = "FPS: " + fps;
+         htmlText = "FPS: " + fps;
       }
    }
 

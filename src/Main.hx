@@ -11,7 +11,7 @@ import nme.Lib;
  */
 class Main extends Sprite 
 {
-	var canvas:DrawingStage;
+	var drawingStage:DrawingStage;
 	
 	public function new()
 	{
@@ -32,22 +32,8 @@ class Main extends Sprite
 		removeEventListener(Event.ADDED_TO_STAGE, init);
 		#end
 		// Entry point
-		trace("init");
 		
-		canvas = new DrawingStage(128);
-		addChild(canvas);
-
-		var brush = nme.Assets.getBitmapData("img/brush-hard.png");
-		/*#if ios
-		var temp = new nme.display.BitmapData(brush.width*2, brush.height*2, true, 0);
-		var mat = new nme.geom.Matrix();
-		mat.scale(2.0, 2.0);
-		temp.draw(brush, mat);
-		brush = temp;
-		#end*/
-		canvas.brush = brush;
-		canvas.color = 0xffcc00;
-
+		stage.addChild(new DrawingStage(stage.stageWidth, stage.stageHeight));
 		stage.addChild(new utils.FPS());
 	}
 	
