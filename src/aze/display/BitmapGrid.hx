@@ -54,16 +54,17 @@ class BitmapGrid extends nme.display.Sprite
 	public function moveTo(id:Int, x:Int, y:Int)
 	{
 		var ctx = getContext(id);
-		if (ctx == null) return;
+		if (ctx == null) return null;
 		ctx.pos.x = x;
 		ctx.pos.y = y;
 		drawAt(ctx.brush, x, y);
+		return ctx;
 	}
 
 	public function lineTo(id:Int, x:Int, y:Int) 
 	{
 		var ctx = getContext(id);
-		if (ctx == null) return;
+		if (ctx == null) return null;
 		var prevX = ctx.pos.x;
 		var prevY = ctx.pos.y;
 		var dx = x - prevX;
@@ -77,6 +78,7 @@ class BitmapGrid extends nme.display.Sprite
 		ctx.pos.x = x;
 		ctx.pos.y = y;
 		drawAt(ctx.brush, x, y);
+		return ctx;
 	}
 
 	function getContext(id) 

@@ -26,8 +26,8 @@
 	<ndll name="zlib" />
 	<ndll name="nme" haxelib="nme" />
 
-	<!-- optimize JS output
+	<!-- optimize JS output -->
 	<haxeflag name="--dead-code-elimination" if="html5" />
-	<haxeflag name="--js-modern" if="html5" />-->
+	<haxeflag name="--js-modern" if="html5" />
 	
 </project>
