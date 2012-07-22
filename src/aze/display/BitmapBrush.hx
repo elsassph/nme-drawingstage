@@ -18,8 +18,8 @@ class BitmapBrush
 	public function update()
 	{
 		dirty = false;
-		var bw = closestPow2(Math.ceil(image.width * scale));
-		var bh = closestPow2(Math.ceil(image.height * scale));
+		var bw = Math.ceil(image.width * scale / 2) * 2;
+		var bh = Math.ceil(image.height * scale / 2) * 2;
 
 		if (_bmp == null || _bmp.width != bw || _bmp.height != bh)
 			_bmp = new BitmapData(bw, bh, true, getColor(0,0));
@@ -32,12 +32,10 @@ class BitmapBrush
 
 		var mat = new nme.geom.Matrix();
 		mat.scale(scale, scale);
-		mat.translate( (bw - image.width * scale) / 2, (bh - image.height * scale) / 2 );
 
 		_bmp.draw(image, mat, null, null, null, true);
 		_bmp.colorTransform(_bmp.rect, ct);
 		
-		_step = image.width * scale / 8;
 		_rect = _bmp.rect.clone();
 		_width = cast _rect.width;
 		_height = cast _rect.height;
