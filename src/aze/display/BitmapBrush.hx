@@ -8,33 +8,47 @@ class BitmapBrush
 	var dirty:Bool;
 	var image:BitmapData;
 
-	public function new(image:BitmapData, color:Int = 0)
+	public function new(image:BitmapData, color:Int = 0, scale:Float = 1.0)
 	{
 		this.image = image;
 		this.color = color;
+		this.scale = scale;
 	}
 
 	public function update()
 	{
 		dirty = false;
-		if (_bmp == null || _bmp.width != image.width || _bmp.height != image.height)
-			_bmp = new BitmapData(image.width, image.height, true, getColor(0,0));
-		_bmp.fillRect(_bmp.rect, getColor(0,0));
+		var bw = closestPow2(Math.ceil(image.width * scale));
+		var bh = closestPow2(Math.ceil(image.height * scale));
+
+		if (_bmp == null || _bmp.width != bw || _bmp.height != bh)
+			_bmp = new BitmapData(bw, bh, true, getColor(0,0));
+		else _bmp.fillRect(_bmp.rect, getColor(0,0));
 		
 		var ct = new nme.geom.ColorTransform();
 		ct.redMultiplier = (color >> 16) / 256.0;
 		ct.greenMultiplier = ((color & 0xff00) >> 8) / 256.0;
 		ct.blueMultiplier = (color & 0xff) / 256.0;
 
-		_bmp.draw(image);
+		var mat = new nme.geom.Matrix();
+		mat.scale(scale, scale);
+		mat.translate( (bw - image.width * scale) / 2, (bh - image.height * scale) / 2 );
+
+		_bmp.draw(image, mat, null, null, null, true);
 		_bmp.colorTransform(_bmp.rect, ct);
 		
+		_step = image.width * scale / 8;
 		_rect = _bmp.rect.clone();
 		_width = cast _rect.width;
 		_height = cast _rect.height;
 	}
 
 	/* PROPERTIES */
+
+	public var step(get_step, null):Float;
+	private var _step:Float;
+	
+	function get_step():Float { return _step; }
 
 	public var width(get_width, null):Int;
 	private var _width:Int;
@@ -82,6 +96,16 @@ class BitmapBrush
 		return _bmp; 
 	}
 
+	public var scale(get_scale, set_scale):Float;
+	private var _scale:Float;
+	
+	inline function get_scale():Float { return _scale; }
+	function set_scale(value:Float):Float 
+	{
+		dirty = _scale != value;
+		return _scale = value;
+	}
+
 	/* HELPER */
 
 	static public inline function getColor(rgb:Int, a:Int = 0xff)
@@ -91,6 +115,13 @@ class BitmapBrush
 		#else
 		return (a << 24) + rgb;
 		#end
+	}
+
+	static public function closestPow2(v:Float)
+	{
+		var s:Int = 1;
+		while (s < v) s = s << 1;
+		return s;
 	}
 
 }

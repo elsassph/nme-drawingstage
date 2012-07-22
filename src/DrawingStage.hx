@@ -84,6 +84,7 @@ class DrawingStage extends nme.display.Sprite
 		brush.color = (Std.int(Math.random() * 256.0) << 16)
 			+ (Std.int(Math.random() * 256.0) << 8)
 			+ Std.int(Math.random() * 256.0);
+		brush.scale = 0.4 + Math.random();
 
 		canvas.lineStyle(id, brush);
 		canvas.moveTo(id, Math.round(x), Math.round(y));
@@ -100,7 +101,7 @@ class DrawingStage extends nme.display.Sprite
 	function getBrush()
 	{
 		if (brushes.length > 0) return brushes.pop();
-		return new BitmapBrush(image);
+		return new BitmapBrush(image, 0, 0.5);
 	}
 
 	/* SETUP */
@@ -110,7 +111,8 @@ class DrawingStage extends nme.display.Sprite
 		removeEventListener(Event.ADDED_TO_STAGE, added);
 
 		brushes = [];
-		image = nme.Assets.getBitmapData("img/brush-hard.png");
+		//image = nme.Assets.getBitmapData("img/brush-hard.png");
+		image = nme.Assets.getBitmapData("img/brush-smooth.png");
 
 		canvas = new BitmapGrid(_width, _height, 128);
 		addChild(canvas);

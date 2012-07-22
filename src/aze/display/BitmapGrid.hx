@@ -93,10 +93,11 @@ class BitmapGrid extends nme.display.Sprite
 		var dx = x - prevX;
 		var dy = y - prevY;
 		var d = Math.sqrt(dx*dx + dy*dy);
-		if (d > 5) {
+		var step = ctx.brush.step;
+		if (d > step) {
 			var a = Math.atan2(dy, dx);
-			for(i in 1...Std.int(d/5))
-				drawAt(ctx.brush, Math.round(prevX + i*5*Math.cos(a)), Math.round(prevY + i*5*Math.sin(a)));
+			for(i in 1...Std.int(d/step))
+				drawAt(ctx.brush, Math.round(prevX + i*step*Math.cos(a)), Math.round(prevY + i*step*Math.sin(a)));
 		}
 		ctx.pos.x = x;
 		ctx.pos.y = y;
