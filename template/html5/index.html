@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width; initial-scale=1.0, user-scalable=no">
+	<title>Drawing Board</title>
+	<style>
+	body { padding:0; margin:0; background:#eee; }
+	* { -webkit-tap-highlight-color:rgba(0,0,0,0); }
+	</style>
+</head>
+<body>
+		<!-- <div id="haxe:trace" style="position: absolute; z-index: 2147483647;"></div> -->
+		<div id="haxe:jeash" class="noselect" style="background-color: #::WIN_FLASHBACKGROUND::; width: ::if (WIN_WIDTH == "0")::100%::else::::WIN_WIDTH::px::end::; height: ::if (WIN_HEIGHT == "0")::100%::else::::WIN_HEIGHT::px::end::" data-framerate="::WIN_FPS::"></div>
+		<script type="text/javascript" src="./::APP_FILE::.js"></script>
+
+		<script>
+		// no page drag
+		document.addEventListener('touchmove', function(e) {
+				e.preventDefault();
+			}, false);
+		</script>
+</body>
+</html>

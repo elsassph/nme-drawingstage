@@ -27,7 +27,10 @@
 	<ndll name="nme" haxelib="nme" />
 
 	<!-- optimize JS output -->
-	<haxeflag name="--dead-code-elimination" if="html5" />
-	<haxeflag name="--js-modern" if="html5" />
+	<section if="html5">
+		<template path="template/html5/index.html" rename="index.html" />
+		<haxeflag name="--dead-code-elimination" />
+		<haxeflag name="--js-modern" />
+	</section>
 	
 </project>

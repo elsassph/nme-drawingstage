@@ -116,6 +116,7 @@ class DrawingStage extends nme.display.Sprite
 		addChild(canvas);
 
 		mouseChildren = false;
+		//#if (mobile || html5)
 		#if mobile
 		nme.ui.Multitouch.inputMode = nme.ui.MultitouchInputMode.TOUCH_POINT;
 		addEventListener(nme.events.TouchEvent.TOUCH_BEGIN, touchBegin);
