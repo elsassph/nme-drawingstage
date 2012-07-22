@@ -48,7 +48,11 @@ class BitmapBrush
 	public var step(get_step, null):Float;
 	private var _step:Float;
 	
-	function get_step():Float { return _step; }
+	function get_step():Float 
+	{ 
+		if (dirty) update();
+		return _step; 
+	}
 
 	public var width(get_width, null):Int;
 	private var _width:Int;
