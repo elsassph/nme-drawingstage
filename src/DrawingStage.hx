@@ -84,7 +84,7 @@ class DrawingStage extends nme.display.Sprite
 		brush.color = (Std.int(Math.random() * 256.0) << 16)
 			+ (Std.int(Math.random() * 256.0) << 8)
 			+ Std.int(Math.random() * 256.0);
-		brush.scale = 0.4 + Math.random();
+		brush.scale = 0.5 + Math.random() * 0.7;
 
 		canvas.lineStyle(id, brush);
 		canvas.moveTo(id, Math.round(x), Math.round(y));
