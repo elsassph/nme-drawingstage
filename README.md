@@ -16,9 +16,7 @@ A multi-touch-friendly fullscreen drawing canvas made with a grid of bitmaps.
 accessed during computations (bitmap drawing is CPU-bound) and performance collapses if you go over 
 some threshold (it's related to L1 and L2 CPU memory cache sizes).
 
-- Compatible with native and Flash NME targets. 
-HTML5 target actually works... but the brush isn't colored because BitmapData.draw doesn't seem to 
-support color transforms.
+- Compatible with all NME targets: Flash, HTML5, iOS, Android, desktop, neko.
 
 - Click/Tap the framerate indicator to clear the stage.
 
