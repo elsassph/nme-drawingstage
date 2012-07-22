@@ -20,11 +20,15 @@ class BitmapBrush
 		if (_bmp == null || _bmp.width != image.width || _bmp.height != image.height)
 			_bmp = new BitmapData(image.width, image.height, true, getColor(0,0));
 		_bmp.fillRect(_bmp.rect, getColor(0,0));
+		
 		var ct = new nme.geom.ColorTransform();
 		ct.redMultiplier = (color >> 16) / 256.0;
 		ct.greenMultiplier = ((color & 0xff00) >> 8) / 256.0;
 		ct.blueMultiplier = (color & 0xff) / 256.0;
-		_bmp.draw(image, null, ct);
+
+		_bmp.draw(image);
+		_bmp.colorTransform(_bmp.rect, ct);
+		
 		_rect = _bmp.rect.clone();
 		_width = cast _rect.width;
 		_height = cast _rect.height;
